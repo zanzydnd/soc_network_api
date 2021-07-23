@@ -1,12 +1,25 @@
 from rest_framework import serializers
 
-from api.models import Post, Comment, PostFile
+from api.models import Post, Comment, PostFile, CommentFile
+
+
+class CommentFileSerializer(serializers.ModelSerializer):
+    file = serializers.SerializerMethodField(read_only=True)
+
+    def get_file(self, instance):
+        return instance.file.url
+
+    class Meta:
+        model = CommentFile
+        fields = ("file",)
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    comment_file = CommentFileSerializer(many=True, read_only=True)
+
     class Meta:
         model = Comment
-        fields = ("id", "text")
+        fields = ("id", "text", "comment_file")
 
 
 class PostFileSerializer(serializers.ModelSerializer):
