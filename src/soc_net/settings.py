@@ -27,7 +27,7 @@ SECRET_KEY = 'j#z6rq5t!r8nj-t&$3xfcc4i$q01_(v@*ryq5n@)n9lg!x-gm0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # Application definition
 
@@ -78,15 +78,14 @@ WSGI_APPLICATION = 'soc_net.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'ENGINE': 'django.db.backends.mysql',
         "NAME": os.environ.get("DB_NAME", "soc_net"),
         "USER": os.environ.get("DB_USER", "root"),
         "PASSWORD": os.environ.get("DB_PASSWORD", "root"),
         "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
+        "PORT": os.environ.get("DB_PORT", "3306"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -128,5 +127,17 @@ _PATH = os.path.abspath(os.path.dirname(__file__))
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = "media"
+REST_FRAMEWORK = {
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FormParser",
+    ],
+    'TEST_REQUEST_RENDERER_CLASSES': [
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.TemplateHTMLRenderer'
+    ]
+}
 
+MEDIA_ROOT = "media"

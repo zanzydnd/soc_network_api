@@ -4,3 +4,4 @@ drf-nested-routers~=0.93.3
 drf-yasg~=1.20.0
 python-dotenv~=0.17.0
 psycopg2-binary~=2.8.6
+mysqlclient~=2.0.3
