@@ -33,6 +33,5 @@ class CommentFile(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="comment_file")
     file = models.FileField(upload_to=comment_file_path)
 
-
     class Meta:
         db_table = "comment_file"

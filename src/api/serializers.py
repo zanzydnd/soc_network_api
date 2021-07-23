@@ -10,6 +10,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostFileSerializer(serializers.ModelSerializer):
+    file = serializers.SerializerMethodField()
+
+    def get_file(self, instance):
+        return instance.file.url
+
     class Meta:
         model = PostFile
         fields = ("file",)
