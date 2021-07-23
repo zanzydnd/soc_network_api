@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'soc_net.wsgi.application'
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': os.environ.get("DB_ENGINE",'django.db.backends.mysql'),
         "NAME": os.environ.get("DB_NAME", "soc_net"),
         "USER": os.environ.get("DB_USER", "root"),
         "PASSWORD": os.environ.get("DB_PASSWORD", "root"),
