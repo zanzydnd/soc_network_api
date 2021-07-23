@@ -56,3 +56,8 @@ class PostWithCommentSerializer(PostSerializer):
 
 class FileSerializer(serializers.Serializer):
     file = serializers.FileField()
+
+class CreateCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("text","post")

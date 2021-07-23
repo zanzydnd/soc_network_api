@@ -4,13 +4,15 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ParseError
 from rest_framework.generics import CreateAPIView, get_object_or_404
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from api.models import Post, PostFile, Comment, CommentFile
-from api.serializers import PostSerializer, FileSerializer, PostWithCommentSerializer, CommentSerializer
+from api.serializers import PostSerializer, FileSerializer, PostWithCommentSerializer, CommentSerializer, \
+    CreateCommentSerializer
 
 
 @api_view(["GET"])
@@ -22,11 +24,17 @@ def main_api_view(request):
 class PostView(ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+    pagination_class = LimitOffsetPagination
 
 
 class CommentView(ModelViewSet):
-    serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    pagination_class = LimitOffsetPagination
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return CreateCommentSerializer
+        return CommentSerializer
 
 
 class CommentAddFileView(ViewSet):
